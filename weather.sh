@@ -19,9 +19,9 @@ BLUE=$(xrdb_q color4)
 
 case "$WEATHER" in
     "Sunny")
-        WEATHER_ICON="";;      # https://fontawesome.com/icons/sun?style=solid
+        WEATHER_ICON="";;  # https://fontawesome.com/icons/sun?style=solid
     "Rain")
-        WEATHER_ICON="";;     # https://fontawesome.com/icons/sun?style=solid
+        WEATHER_ICON="";;  # https://fontawesome.com/icons/sun?style=solid
     "Snow")
         WEATHER_ICON="";;
     *)
