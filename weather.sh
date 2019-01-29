@@ -24,6 +24,8 @@ case "$WEATHER" in
         WEATHER_ICON="";;  # https://fontawesome.com/icons/sun?style=solid
     "Snow")
         WEATHER_ICON="";;
+    "Clouds")
+        WEATHER_ICON="";;
     *)
         WEATHER_ICON=$WEATHER;;
 esac
