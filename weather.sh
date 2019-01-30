@@ -8,8 +8,8 @@ TMP_FILE=$(mktemp)
 
 curl "http://api.openweathermap.org/data/2.5/weather?q=${CITY}&appid=${API_KEY}&units=${UNIT}" 2>/dev/null > $TMP_FILE
 
-TEMP_C=$(cat $TMP_FILE | jq '.main.temp')
-TEMP_INT=$(echo "scale=0; $TEMP_C/1" | bc)
+TEMPERATURE=$(cat $TMP_FILE | jq '.main.temp')
+TEMP_INT=$(echo "scale=0; $TEMPERATURE/1" | bc)
 
 WEATHER=$(cat $TMP_FILE | jq '.weather[-1].main' -r)
 
@@ -38,6 +38,6 @@ else
     TEMP_COLOR=${BLUE}
 fi
 
-echo "$WEATHER_ICON %{F#$BLUE}$TEMP_C°C"
+echo "$WEATHER_ICON %{F#$BLUE}$TEMPERATURE°C"
 
 rm $TMP_FILE
