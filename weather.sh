@@ -1,8 +1,8 @@
 #!/bin/bash
 
-CITY=""
-API_KEY=""
-UNIT="metric"
+cd $(dirname $(realpath $0))
+
+source ./config
 
 TMP_FILE=$(mktemp)
 
