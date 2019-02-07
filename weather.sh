@@ -32,11 +32,11 @@ case "$WEATHER" in
         WEATHER_ICON=$WEATHER;;
 esac
 
-if (( TEMP_INT > 15 )); then
+if (( TEMP_INT > 20 )); then
     TEMP_COLOR=${RED}
-elif (( TEMP_INT > -5 && TEMP_INT < 15 )); then
+elif (( TEMP_INT > 5 && TEMP_INT < 20 )); then
     TEMP_COLOR=${ORANGE}
-else
+elif (( TEMP_INT < 5 )); then
     TEMP_COLOR=${BLUE}
 fi
 
