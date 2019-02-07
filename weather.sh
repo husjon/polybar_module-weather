@@ -26,6 +26,8 @@ case "$WEATHER" in
         WEATHER_ICON="";;
     "Clouds")
         WEATHER_ICON="";;
+    "")
+        WEATHER_ICON="%{F#$RED}";;
     *)
         WEATHER_ICON=$WEATHER;;
 esac
@@ -38,6 +40,7 @@ else
     TEMP_COLOR=${BLUE}
 fi
 
-echo "$WEATHER_ICON %{F#$BLUE}$TEMPERATURE°C"
+[[ ! $TEMPERATURE ]] && TEMPERATURE="--"
+echo "$WEATHER_ICON %{F#$TEMP_COLOR}$TEMPERATURE°C"
 
 rm $TMP_FILE
