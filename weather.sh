@@ -29,6 +29,8 @@ case "$WEATHER" in
         WEATHER_ICON="";;              # https://fontawesome.com/icons/snowflake?style=solid
     "Clouds")
         WEATHER_ICON="";;              # https://fontawesome.com/icons/cloud?style=solid
+    "Fog")
+        WEATHER_ICON="";;              # https://fontawesome.com/icons/smog?style=solid
     "") # In case of errors
         WEATHER_ICON="%{F#$RED}";;     # https://fontawesome.com/icons/poo-storm?style=solid
     *)  # Fallback to text
