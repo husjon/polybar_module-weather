@@ -6,7 +6,7 @@ source ./config
 
 TMP_FILE=$(mktemp)
 
-curl "http://api.openweathermap.org/data/2.5/weather?q=${CITY}&appid=${API_KEY}&units=${UNIT}" 2>/dev/null > $TMP_FILE
+curl --connect-timeout 1 "http://api.openweathermap.org/data/2.5/weather?q=${CITY}&appid=${API_KEY}&units=${UNIT}" 2>/dev/null > $TMP_FILE
 
 TEMPERATURE=$(cat $TMP_FILE | jq '.main.temp')
 TEMP_INT=$(echo "scale=0; $TEMPERATURE/1" | bc 2>/dev/null)
