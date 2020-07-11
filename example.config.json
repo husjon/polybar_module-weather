@@ -1,0 +1,24 @@
+{
+    "city": "",
+    "api_key": "",
+    "temperature_unit": "metric",
+
+    "threshold": {
+        "high": {
+            "color": "#ff0000",
+            "value": 20
+        },
+        "normal": {
+            "color": "#ffff00",
+            "value": 10
+        },
+        "low":{
+            "color": "#00ff00",
+            "value": 5
+        },
+        "cold":{
+            "color": "#0000ff",
+            "value": 0
+        }
+    }
+}

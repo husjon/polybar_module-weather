@@ -1,6 +1,0 @@
-# Rename this file as config
-CITY=""
-API_KEY=""
-UNIT="metric"  # metric or imperial (Comment to default to kelvin)
-
-# vim: ft=sh
