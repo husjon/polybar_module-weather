@@ -5,16 +5,9 @@ import os
 
 import requests
 
-
-BASEDIR = os.path.dirname(__file__)
-with open(BASEDIR + '/config.json', 'r') as fh:
-    CONFIG = json.load(fh)
-
-
-API_URL = (
-    "http://api.openweathermap.org/data/2.5/weather"
-    "?q={city}&appid={api_key}&units={temperature_unit}"
-).format(**CONFIG)
+def error(msg=''):
+    print('%{F#ff0000}', msg)
+    exit(0)
 
 
 def weather_icon(string):
@@ -81,11 +74,27 @@ def fetch_weather_data():
             "unit": temperature_unit(unit=CONFIG['temperature_unit']),
         }
 
-    raise Exception('No weather')
+    error('No weather')
+
+
+BASEDIR = os.path.dirname(os.path.realpath(__file__))
+try:
+    with open(BASEDIR + '/config.json', 'r') as fh:
+        CONFIG = json.load(fh)
+except FileNotFoundError:
+    error('Config missing')
+except json.decoder.JSONDecodeError:
+    error('Config invalid')
+
+API_URL = (
+    "http://api.openweathermap.org/data/2.5/weather"
+    "?q={city}&appid={api_key}&units={temperature_unit}"
+).format(**CONFIG)
+
 
 if __name__ == "__main__":
     try:
         DATA = fetch_weather_data()
         print('{icon} {color}{temperature}°{unit}'.format(**DATA))
     except Exception:  # pylint: disable=broad-except
-        print("%{F#ff0000}")  # https://fontawesome.com/icons/poo-storm?style=solid
+        error('Error')  # https://fontawesome.com/icons/poo-storm?style=solid
