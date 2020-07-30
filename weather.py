@@ -2,6 +2,8 @@
 
 import json
 import os
+import pathlib
+import time
 
 import requests
 
@@ -58,30 +60,41 @@ def temperature_unit(unit):
 
 def fetch_weather_data():
     """ Fetches weather data from Open Weather Maps """
-    result = requests.get(API_URL)
+    weather_cache_file = BASEDIR / 'cache.json'
 
-    if result.status_code == 200:
-        weather_data = json.loads(result.content)
+    weather_data = None
+    if os.path.exists(weather_cache_file):
+        if time.time() - os.path.getmtime(weather_cache_file) < 60:
+            with open(weather_cache_file, 'r') as fh:
+                weather_data = json.load(fh)
 
-        weather = weather_data['weather'][-1]['main']
-        temperature = round(weather_data['main']['temp'], 1)
-        color = '%{{F{}}}'.format(temperature_color(temperature=temperature))
+    if not weather_data:
+        result = requests.get(API_URL)
 
-        return {
-            "icon": weather_icon(string=weather),
-            "color": color,
-            "temperature": temperature,
-            "unit": temperature_unit(unit=CONFIG['temperature_unit']),
-        }
+        if result.status_code == 200:
+            weather_data = json.loads(result.content)
+            with open(weather_cache_file, 'w+') as fh:
+                json.dump(weather_data, fh)
+        else:
+            error('No weather')
 
-    error('No weather')
+    weather = weather_data['weather'][-1]['main']
+    temperature = round(weather_data['main']['temp'], 1)
+    color = '%{{F{}}}'.format(temperature_color(temperature=temperature))
+
+    return {
+        "icon": weather_icon(string=weather),
+        "color": color,
+        "temperature": temperature,
+        "unit": temperature_unit(unit=CONFIG['temperature_unit']),
+    }
 
 
-BASEDIR = os.path.dirname(os.path.realpath(__file__))
+BASEDIR = pathlib.Path(os.path.dirname(os.path.realpath(__file__)))
 try:
-    with open(BASEDIR + '/config.json', 'r') as fh:
+    with open(BASEDIR / 'config.json', 'r') as fh:
         CONFIG = json.load(fh)
-except FileNotFoundError:
+except FileNotFoundError as e:
     error('Config missing')
 except json.decoder.JSONDecodeError:
     error('Config invalid')
