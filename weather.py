@@ -12,6 +12,16 @@ def error(msg=''):
     exit(0)
 
 
+def load_config():
+    try:
+        with open(BASEDIR / 'config.json', 'r') as fh:
+            return json.load(fh)
+    except FileNotFoundError:
+        error('Config missing')
+    except json.decoder.JSONDecodeError:
+        error('Config invalid')
+
+
 def weather_icon(string):
     """ Returns an icon representing the current weather """
     if string in ["Sunny", "Clear"]:
@@ -91,14 +101,7 @@ def fetch_weather_data():
 
 
 BASEDIR = pathlib.Path(os.path.dirname(os.path.realpath(__file__)))
-try:
-    with open(BASEDIR / 'config.json', 'r') as fh:
-        CONFIG = json.load(fh)
-except FileNotFoundError as e:
-    error('Config missing')
-except json.decoder.JSONDecodeError:
-    error('Config invalid')
-
+CONFIG = load_config()
 API_URL = (
     "http://api.openweathermap.org/data/2.5/weather"
     "?q={city}&appid={api_key}&units={temperature_unit}"
