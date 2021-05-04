@@ -79,7 +79,7 @@ def fetch_weather_data():
                 weather_data = json.load(fh)
 
     if not weather_data:
-        result = requests.get(API_URL)
+        result = requests.get(API_URL, timeout=5)
 
         if result.status_code == 200:
             weather_data = json.loads(result.content)
@@ -112,5 +112,7 @@ if __name__ == "__main__":
     try:
         DATA = fetch_weather_data()
         print('{icon} {color}{temperature}°{unit}'.format(**DATA))
+    except requests.ConnectTimeout:
+        error(f'Timeout')  # https://fontawesome.com/icons/poo-storm?style=solid
     except Exception as e:  # pylint: disable=broad-except
         error(f'Error: {e}')  # https://fontawesome.com/icons/poo-storm?style=solid
