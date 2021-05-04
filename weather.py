@@ -112,5 +112,5 @@ if __name__ == "__main__":
     try:
         DATA = fetch_weather_data()
         print('{icon} {color}{temperature}°{unit}'.format(**DATA))
-    except Exception:  # pylint: disable=broad-except
-        error('Error')  # https://fontawesome.com/icons/poo-storm?style=solid
+    except Exception as e:  # pylint: disable=broad-except
+        error(f'Error: {e}')  # https://fontawesome.com/icons/poo-storm?style=solid
