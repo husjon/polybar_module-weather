@@ -114,5 +114,7 @@ if __name__ == "__main__":
         print('{icon} {color}{temperature}°{unit}'.format(**DATA))
     except requests.ConnectTimeout:
         error(f'Timeout')  # https://fontawesome.com/icons/poo-storm?style=solid
+    except requests.ConnectionError:
+        error('Error')
     except Exception as e:  # pylint: disable=broad-except
         error(f'Error: {e}')  # https://fontawesome.com/icons/poo-storm?style=solid
