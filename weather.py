@@ -8,7 +8,7 @@ import time
 import requests
 
 def error(msg=''):
-    print('%{F#ff0000}', msg)
+    print('%{F#$RED}󰧠', msg)  # material-design: cloud-alert
     exit(0)
 
 
@@ -25,17 +25,17 @@ def load_config():
 def weather_icon(string):
     """ Returns an icon representing the current weather """
     if string in ["Sunny", "Clear"]:
-        icon = ""          # https://fontawesome.com/icons/sun?style=solid
+        icon = "󰖙"          # material-design: weather-sunny
     elif string in ["Rain", "Drizzle"]:
-        icon = ""          # https://fontawesome.com/icons/cloud-rain?style=solid
+        icon = "󰖗"          # material-design: weather-rainy
     elif string in ["Snow"]:
-        icon = ""          # https://fontawesome.com/icons/snowflake?style=solid
+        icon = "󰖘"          # material-design: weather-snowy
     elif string in ["Clouds"]:
-        icon = ""          # https://fontawesome.com/icons/cloud?style=solid
+        icon = "󰖐"          # material-design: weather-cloudy
     elif string in ["Fog", "Mist"]:
-        icon = ""          # https://fontawesome.com/icons/smog?style=solid
+        icon = "󰖑"          # material-design: weather-fog
     elif string in [""]:  # In case of errors
-        icon = "%{F#$RED}" # https://fontawesome.com/icons/poo-storm?style=solid
+        icon = "%{F#$RED}󰧠" # material-design: cloud-alert
     else:
         icon = string
 
@@ -113,8 +113,8 @@ if __name__ == "__main__":
         DATA = fetch_weather_data()
         print('{icon} {color}{temperature}°{unit}'.format(**DATA))
     except requests.ConnectTimeout:
-        error(f'Timeout')  # https://fontawesome.com/icons/poo-storm?style=solid
+        error(f'Timeout')
     except requests.ConnectionError:
         error('Error')
     except Exception as e:  # pylint: disable=broad-except
-        error(f'Error: {e}')  # https://fontawesome.com/icons/poo-storm?style=solid
+        error(f'Error: {e}')
