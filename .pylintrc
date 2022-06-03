@@ -1,5 +1,6 @@
 [MESSAGES CONTROL]
-disable=missing-module-docstring
+disable=missing-module-docstring,
+        missing-function-docstring
 
 [BASIC]
 good-names=fh
