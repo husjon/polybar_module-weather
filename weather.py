@@ -79,7 +79,15 @@ def fetch_weather_data():
                 weather_data = json.load(fh)
 
     if not weather_data:
-        result = requests.get(API_URL, timeout=5)
+        result = requests.get(
+            url="http://api.openweathermap.org/data/2.5/weather",
+            params={
+                'q': CONFIG['city'],
+                'appid': CONFIG['api_key'],
+                'units': CONFIG['temperature_unit'],
+            },
+            timeout=5
+        )
 
         if result.status_code == 200:
             weather_data = json.loads(result.content)
@@ -102,10 +110,6 @@ def fetch_weather_data():
 
 BASEDIR = pathlib.Path(os.path.dirname(os.path.realpath(__file__)))
 CONFIG = load_config()
-API_URL = (
-    "http://api.openweathermap.org/data/2.5/weather"
-    "?q={city}&appid={api_key}&units={temperature_unit}"
-).format(**CONFIG)
 
 
 if __name__ == "__main__":
