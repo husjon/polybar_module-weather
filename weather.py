@@ -14,7 +14,7 @@ def error(msg=''):
 
 def load_config():
     try:
-        with open(BASEDIR / 'config.json', 'r') as fh:
+        with open(BASEDIR / 'config.json', 'r', encoding='UTF-8') as fh:
             return json.load(fh)
     except FileNotFoundError:
         error('Config missing')
@@ -75,7 +75,7 @@ def fetch_weather_data():
     weather_data = None
     if os.path.exists(weather_cache_file):
         if time.time() - os.path.getmtime(weather_cache_file) < 60:
-            with open(weather_cache_file, 'r') as fh:
+            with open(weather_cache_file, 'r', encoding='UTF-8') as fh:
                 weather_data = json.load(fh)
 
     if not weather_data:
@@ -83,7 +83,7 @@ def fetch_weather_data():
 
         if result.status_code == 200:
             weather_data = json.loads(result.content)
-            with open(weather_cache_file, 'w+') as fh:
+            with open(weather_cache_file, 'w+', encoding='UTF-8') as fh:
                 json.dump(weather_data, fh)
         else:
             error('No weather')
