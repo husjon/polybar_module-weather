@@ -23,19 +23,20 @@ def load_config():
 
 
 def weather_icon(string):
+    # https://www.nerdfonts.com/cheat-sheet (using the `nf-md-weather` set)
     """ Returns an icon representing the current weather """
     if string in ["Sunny", "Clear"]:
-        icon = "󰖙"          # material-design: weather-sunny
+        icon = "󰖙"
     elif string in ["Rain", "Drizzle"]:
-        icon = "󰖗"          # material-design: weather-rainy
+        icon = "󰖗"
     elif string in ["Snow"]:
-        icon = "󰖘"          # material-design: weather-snowy
+        icon = "󰼶"
     elif string in ["Clouds"]:
-        icon = "󰖐"          # material-design: weather-cloudy
+        icon = "󰖐"
     elif string in ["Fog", "Mist"]:
-        icon = "󰖑"          # material-design: weather-fog
+        icon = "󰖑"
     elif string in [""]:  # In case of errors
-        icon = "%{F#$RED}󰧠" # material-design: cloud-alert
+        icon = "%{F#$RED}"
     else:
         icon = string
 
